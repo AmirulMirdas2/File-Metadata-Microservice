@@ -1,27 +1,27 @@
-const express = require('express');
-const multer = require('multer');
-const cors = require('cors');
-const path = require('path');
+const express = require("express");
+const multer = require("multer");
+const cors = require("cors");
+const path = require("path");
 
 const app = express();
-const upload = multer({ dest: 'uploads/' }); // simpan file upload di folder "uploads"
+const upload = multer({ dest: "uploads/" }); // simpan file upload di folder "uploads"
 
 app.use(cors());
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use(express.static('views'));
+app.use("/public", express.static(path.join(__dirname, "public")));
+app.use(express.static("views"));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/views/index.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "/views/index.html"));
 });
 
-app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
+app.post("/api/fileanalyse", upload.single("upfile"), (req, res) => {
   const file = req.file;
-  if (!file) return res.status(400).json({ error: 'No file uploaded' });
+  if (!file) return res.status(400).json({ error: "No file uploaded" });
 
   res.json({
     name: file.originalname,
     type: file.mimetype,
-    size: file.size
+    size: file.size,
   });
 });
 
